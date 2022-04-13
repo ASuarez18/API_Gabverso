@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const poderController = require('../controller/poder');
+const poderController = require('../controller/poder.controller');
 
 //const middleware = '../middleware/jwt-middleware.js';
 

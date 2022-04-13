@@ -18,7 +18,7 @@ module.exports.insertLogin = (req, res) =>
     
     if(user === "roy" && password === "123")
     {
-        token = jwt.sign(payload, config.key, {expiresIn: 72000})
+        token = jwt.sign(payload, config.key, {expiresIn: 7200})
         mensaje = 'Usuario autenticado'
     }
     
