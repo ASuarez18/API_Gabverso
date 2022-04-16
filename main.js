@@ -5,7 +5,6 @@ const app = express();
 const port = process.env.PORT || 3000;
 const jwt = require('jsonwebtoken');
 
-
 const config = require('./config/jwt');
 const login = require('./routes/login');
 const tema = require('./routes/tema');
