@@ -1,13 +1,13 @@
 {
-  "name": "plantita",
+  "name": "api_gavberso",
   "version": "1.0.0",
-  "description": "Servicio Web para los datos de la planta.",
-  "main": "app.js",
+  "description": "Requests manager for Gabverse project.",
+  "main": "main.js",
   "scripts": {
     "start": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Roy, Brandon, Alex, Emma & Gab",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

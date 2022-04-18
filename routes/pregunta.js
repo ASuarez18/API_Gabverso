@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const preguntaController = require('../controller/pregunta.controller');
 
-//const middleware = '../middleware/jwt-middleware.js';
+const middleware = '../middleware/jwt-middleware.js';
 
-router.get('/pregunta', preguntaController.getPreguntas);
-router.get('/pregunta/:id', preguntaController.getPregunta);
-router.put('/pregunta', preguntaController.updatePregunta);
-router.post('/pregunta', preguntaController.insertPregunta);
-router.delete('/pregunta/:id', preguntaController.deletePregunta);
+router.get('/pregunta', middleware, preguntaController.getPreguntas);
+router.get('/pregunta/:id', middleware, preguntaController.getPregunta);
+router.put('/pregunta', middleware, preguntaController.updatePregunta);
+router.post('/pregunta', middleware, preguntaController.insertPregunta);
+router.delete('/pregunta/:id', middleware, preguntaController.deletePregunta);
 
 module.exports = router;

@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const usuarioMisionController = require('../controller/usuarioMision.controller');
 
-//const middleware = '../middleware/jwt-middleware.js';
+const middleware = '../middleware/jwt-middleware.js';
 
-router.get('/usuarioMisiones', usuarioMisionController.getUsuarioMisiones);
-router.get('/usuarioMisionU/:id', usuarioMisionController.getUsuarioMisionU);
-router.get('/usuarioMisionM/:id', usuarioMisionController.getUsuarioMisionM);
-router.get('/usuarioMision', usuarioMisionController.getUsuarioMision);
-router.put('/usuarioMision', usuarioMisionController.updateUsuarioMision);
-router.post('/usuarioMision', usuarioMisionController.insertUsuarioMision);
-router.delete('/usuarioMision/:id', usuarioMisionController.deleteUsuarioMision);
+router.get('/usuarioMisiones', middleware, usuarioMisionController.getUsuarioMisiones);
+router.get('/usuarioMisionU/:id', middleware, usuarioMisionController.getUsuarioMisionU);
+router.get('/usuarioMisionM/:id', middleware, usuarioMisionController.getUsuarioMisionM);
+router.get('/usuarioMision', middleware, usuarioMisionController.getUsuarioMision);
+router.put('/usuarioMision', middleware, usuarioMisionController.updateUsuarioMision);
+router.post('/usuarioMision', middleware, usuarioMisionController.insertUsuarioMision);
+router.delete('/usuarioMision/:id', middleware, usuarioMisionController.deleteUsuarioMision);
 
 module.exports = router;
