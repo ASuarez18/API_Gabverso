@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const categoriaController = require('../controller/categoria.controller');
 
-const middleware = '../middleware/jwt-middleware.js';
-
+const middleware = require('../middleware/jwt-middleware.js');
 router.get('/categoria', middleware, categoriaController.getCategorias);
 router.get('/categoria/:id', middleware, categoriaController.getCategoria);
 router.put('/categoria', middleware, categoriaController.updateCategoria);

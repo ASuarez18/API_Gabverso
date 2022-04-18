@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const emoteController = require('../controller/emote.controller');
 
-const middleware = '../middleware/jwt-middleware.js';
+const middleware = require('../middleware/jwt-middleware.js');
 
 router.get('/emote', middleware, emoteController.getEmotes);
 router.get('/emote/:id', middleware, emoteController.getEmote);

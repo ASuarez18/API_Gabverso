@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const usuarioPoderController = require('../controller/usuarioPoder.controller');
 
-const middleware = '../middleware/jwt-middleware.js';
+const middleware = require('../middleware/jwt-middleware.js');
 
 router.get('/usuarioPoderes', middleware, usuarioPoderController.getUsuarioPoderes);
 router.get('/usuarioPoderU/:id', middleware, usuarioPoderController.getUsuarioPoderU);

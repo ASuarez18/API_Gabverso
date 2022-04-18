@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const estadisticaController = require('../controller/estadistica.controller');
 
-const middleware = '../middleware/jwt-middleware.js';
+const middleware = require('../middleware/jwt-middleware.js');
 
 router.get('/estadistica', middleware, estadisticaController.getEstadisticas);
 router.get('/estadistica/:id', middleware, estadisticaController.getEstadistica);

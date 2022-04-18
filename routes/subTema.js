@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const subTemaController = require('../controller/subTema.controller');
 
-const middleware = '../middleware/jwt-middleware.js';
+const middleware = require('../middleware/jwt-middleware.js');
 
 router.get('/subTema', middleware, subTemaController.getSubTemas);
 router.get('/subTema/:id', middleware, subTemaController.getSubTema);

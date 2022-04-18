@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const NPCsController = require('../controller/NPCs.controller');
 
-const middleware = '../middleware/jwt-middleware.js';
+const middleware = require('../middleware/jwt-middleware.js');
 
 router.get('/NPCs', middleware, NPCsController.getNPCs);
 router.get('/NPCs/:id', middleware, NPCsController.getNPC);

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const dificultadController = require('../controller/dificultad.controller');
 
-const middleware = '../middleware/jwt-middleware.js';
+const middleware = require('../middleware/jwt-middleware.js');
 
 router.get('/dificultad', middleware, dificultadController.getDificultades);
 router.get('/dificultad/:id', middleware, dificultadController.getDificultad);

@@ -13,3 +13,4 @@ module.exports.stringCheck = (str,check) => {
   }
   return check;
 }
+
