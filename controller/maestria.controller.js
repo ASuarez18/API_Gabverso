@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const mysqlConfig = require('../helpers/mysql-config')
 const conexion = mysql.createConnection(mysqlConfig);
+const dataValidation = require('../helpers/dataValidation');
 
 module.exports.getMaestrias = (req,res) => 
 {
@@ -15,13 +16,20 @@ module.exports.getMaestrias = (req,res) =>
     
 module.exports.getMaestria = (req,res) => 
 {
-    const sql = `SELECT * FROM maestria WHERE idMaestria = ?`;
-        conexion.query(sql, [req.params.id] ,(error, results, fields) => {
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    });
+    let start = true;
+    start = dataValidation.intCheck(req.params.id,start);
+    if(start){
+        const sql = `SELECT * FROM maestria WHERE idMaestria = ?`;
+            conexion.query(sql, [req.params.id] ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.insertMaestria = (req, res) => 
@@ -50,11 +58,18 @@ module.exports.updateMaestria = (req, res) =>
 
 module.exports.deleteMaestria = (req, res) => 
 {
-    const sql = `DELETE FROM maestria WHERE idMaestria = ?`;
-        conexion.query(sql, [req.params.id] ,(error, results, fields) => {
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    });
+    let start = true;
+    start = dataValidation.intCheck(req.params.id,start);
+    if(start){
+        const sql = `DELETE FROM maestria WHERE idMaestria = ?`;
+            conexion.query(sql, [req.params.id] ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };

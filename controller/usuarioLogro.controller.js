@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const mysqlConfig = require('../helpers/mysql-config')
 const conexion = mysql.createConnection(mysqlConfig);
+const dataValidation = require('../helpers/dataValidation');
 
 module.exports.getUsuarioLogros = (req,res) => 
 {
@@ -15,24 +16,38 @@ module.exports.getUsuarioLogros = (req,res) =>
     
 module.exports.getUsuarioLogroU = (req,res) => 
 {
-    const sql = `SELECT * FROM usuarioLogro WHERE idUsuario = ?`;
-        conexion.query(sql, [req.params.id] ,(error, results, fields) => {
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    });
+    let start = true;
+    start = dataValidation.intCheck(req.params.id,start);
+    if(start){
+        const sql = `SELECT * FROM usuarioLogro WHERE idUsuario = ?`;
+            conexion.query(sql, [req.params.id] ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.getUsuarioLogroL = (req,res) => 
 {
-    const sql = `SELECT * FROM usuarioLogro WHERE idLogro = ?`;
-        conexion.query(sql, [req.params.id] ,(error, results, fields) => {
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    });
+    let start = true;
+    start = dataValidation.intCheck(req.params.id,start);
+    if(start){
+        const sql = `SELECT * FROM usuarioLogro WHERE idLogro = ?`;
+            conexion.query(sql, [req.params.id] ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.getUsuarioLogro = (req,res) => 

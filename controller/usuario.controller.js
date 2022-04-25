@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const mysqlConfig = require('../helpers/mysql-config')
 const conexion = mysql.createConnection(mysqlConfig);
+const dataValidation = require('../helpers/dataValidation');
 
 module.exports.getUsuarios = (req,res) => 
 {
@@ -15,13 +16,20 @@ module.exports.getUsuarios = (req,res) =>
     
 module.exports.getUsuario = (req,res) => 
 {
-    const sql = `SELECT * FROM usuario WHERE idUsuario = ?`;
-        conexion.query(sql, [req.params.id] ,(error, results, fields) => {
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    });
+    let start = true;
+    start = dataValidation.intCheck(req.params.id,start);
+    if(start){
+        const sql = `SELECT * FROM usuario WHERE idUsuario = ?`;
+            conexion.query(sql, [req.params.id] ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.insertUsuario = (req, res) => 
@@ -58,11 +66,18 @@ module.exports.updateUsuario = (req, res) =>
 
 module.exports.deleteUsuario = (req, res) => 
 {
-    const sql = `DELETE FROM usuario WHERE idUsuario = ?`;
-        conexion.query(sql, [req.params.id] ,(error, results, fields) => {
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    });
+    let start = true;
+    start = dataValidation.intCheck(req.params.id,start);
+    if(start){
+        const sql = `DELETE FROM usuario WHERE idUsuario = ?`;
+            conexion.query(sql, [req.params.id] ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };

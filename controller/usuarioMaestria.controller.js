@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const mysqlConfig = require('../helpers/mysql-config')
 const conexion = mysql.createConnection(mysqlConfig);
+const dataValidation = require('../helpers/dataValidation');
 
 module.exports.getUsuarioMaestrias = (req,res) => 
 {
@@ -15,24 +16,38 @@ module.exports.getUsuarioMaestrias = (req,res) =>
     
 module.exports.getUsuarioMaestriaU = (req,res) => 
 {
-    const sql = `SELECT * FROM usuarioMaestria WHERE idUsuario = ?`;
-        conexion.query(sql, [req.params.id] ,(error, results, fields) => {
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    });
+    let start = true;
+    start = dataValidation.intCheck(req.params.id,start);
+    if(start){
+        const sql = `SELECT * FROM usuarioMaestria WHERE idUsuario = ?`;
+            conexion.query(sql, [req.params.id] ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.getUsuarioMaestriaM = (req,res) => 
 {
-    const sql = `SELECT * FROM usuarioMaestria WHERE idTema = ?`;
-        conexion.query(sql, [req.params.id] ,(error, results, fields) => {
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    });
+    let start = true;
+    start = dataValidation.intCheck(req.params.id,start);
+    if(start){
+        const sql = `SELECT * FROM usuarioMaestria WHERE idTema = ?`;
+            conexion.query(sql, [req.params.id] ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.getUsuarioMaestria = (req,res) => 

@@ -1,7 +1,9 @@
 const mysql = require('mysql');
 const mysqlConfig = require('../helpers/mysql-config')
 const conexion = mysql.createConnection(mysqlConfig);
-const config = require('../config/jwt')
+const jwt = require('jsonwebtoken');
+const config = require('../config/jwt');
+const dataValidation = require('../helpers/dataValidation');
 
 module.exports.insertLogin = (req, res) => 
 {

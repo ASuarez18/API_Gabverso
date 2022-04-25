@@ -3,9 +3,9 @@ const mysqlConfig = require('../helpers/mysql-config')
 const conexion = mysql.createConnection(mysqlConfig);
 const dataValidation = require('../helpers/dataValidation');
 
-module.exports.getUsuarioPoderes = (req,res) => 
+module.exports.getAmigos = (req,res) => 
 {
-    const sql = `SELECT * FROM usuarioPoder`;
+    const sql = `SELECT * FROM amigos`;
         conexion.query(sql, (error, results, fields) => {
         if(error){
             res.send(error);
@@ -14,12 +14,12 @@ module.exports.getUsuarioPoderes = (req,res) =>
     });
 };
     
-module.exports.getUsuarioPoderU = (req,res) => 
+module.exports.getAmigoU1 = (req,res) => 
 {
     let start = true;
     start = dataValidation.intCheck(req.params.id,start);
     if(start){
-        const sql = `SELECT * FROM usuarioPoder WHERE idUsuario = ?`;
+        const sql = `SELECT * FROM amigos WHERE idUsuario1 = ?`;
             conexion.query(sql, [req.params.id] ,(error, results, fields) => {
             if(error){
                 res.send(error);
@@ -32,12 +32,12 @@ module.exports.getUsuarioPoderU = (req,res) =>
     }
 };
 
-module.exports.getUsuarioPoderP = (req,res) => 
+module.exports.getAmigoU2 = (req,res) => 
 {
     let start = true;
     start = dataValidation.intCheck(req.params.id,start);
     if(start){
-        const sql = `SELECT * FROM usuarioPoder WHERE idPoder = ?`;
+        const sql = `SELECT * FROM amigos WHERE idUsuario2 = ?`;
             conexion.query(sql, [req.params.id] ,(error, results, fields) => {
             if(error){
                 res.send(error);
@@ -50,10 +50,10 @@ module.exports.getUsuarioPoderP = (req,res) =>
     }
 };
 
-module.exports.getUsuarioPoder = (req,res) => 
+module.exports.getAmigo = (req,res) => 
 {
-    const sql = `SELECT * FROM usuarioPoder WHERE idUsuario = ? AND idPoder = ?`;
-        conexion.query(sql, [body.idUsuario, body.idPoder] ,(error, results, fields) => {
+    const sql = `SELECT * FROM amigos WHERE idUsuario1 = ? AND idUsuario2 = ?`;
+        conexion.query(sql, [body.idUsuario1, body.idUsuario2] ,(error, results, fields) => {
         if(error){
             res.send(error);
         }
@@ -61,11 +61,11 @@ module.exports.getUsuarioPoder = (req,res) =>
     });
 };
 
-module.exports.insertUsuarioPoder = (req, res) => 
+module.exports.insertAmigos = (req, res) => 
 {
     const body = req.body; 
-    const sql = `INSERT INTO usuarioPoder(idUsuario, idPoder) VALUES(?, ?)`;
-    conexion.query(sql, [body.idUsuario, body.idPoder], (error, results, fields) =>{
+    const sql = `INSERT INTO amigos(idUsuario1, idUsuario2) VALUES(?, ?)`;
+    conexion.query(sql, [body.idUsuario1, body.idUsuario2], (error, results, fields) =>{
         if(error){
             res.send(error);
         }
@@ -73,12 +73,12 @@ module.exports.insertUsuarioPoder = (req, res) =>
     })
 };
 
-module.exports.updateUsuarioPoder = (req, res) => 
+module.exports.updateAmigos = (req, res) => 
 {
     const body = req.body; 
-    const sql = `UPDATE usuarioPoder SET idUsuario = ?, idPoder = ? WHERE idUsuario = ?
-        AND idPoder = ?`;
-    conexion.query(sql, [body.idUsuario, body.idPoder, body.idUsuario, body.idPoder,],
+    const sql = `UPDATE amigos SET idUsuario1 = ?, idUsuario2 = ? WHERE idUsuario1 = ?
+        AND idUsuario2 = ?`;
+    conexion.query(sql, [body.idUsuario1, body.idUsuario2, body.idUsuario1, body.idUsuario2,],
         (error, results, fields) =>{
         if(error){
             res.send(error);
@@ -87,10 +87,10 @@ module.exports.updateUsuarioPoder = (req, res) =>
     })
 };
 
-module.exports.deleteUsuarioPoder = (req, res) => 
+module.exports.deleteAmigos = (req, res) => 
 {
-    const sql = `DELETE FROM usuarioPoder WHERE idUsuario = ? AND idPoder = ?`;
-        conexion.query(sql, [body.idUsuario, body.idPoder] ,(error, results, fields) => {
+    const sql = `DELETE FROM amigos WHERE idUsuario1 = ? AND idUsuario2 = ?`;
+        conexion.query(sql, [body.idUsuario1, body.idUsuario2] ,(error, results, fields) => {
         if(error){
             res.send(error);
         }

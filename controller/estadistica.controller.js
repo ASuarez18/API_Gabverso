@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const mysqlConfig = require('../helpers/mysql-config')
 const conexion = mysql.createConnection(mysqlConfig);
+const dataValidation = require('../helpers/dataValidation');
 
 module.exports.getEstadisticas = (req,res) => 
 {
@@ -16,12 +17,19 @@ module.exports.getEstadisticas = (req,res) =>
 module.exports.getEstadistica = (req,res) => 
 {
     const sql = `SELECT * FROM estadistica WHERE idEstadistica = ?`;
+    let start = true;
+    start = dataValidation.intCheck(req.params.id,start);
+    if(start){
         conexion.query(sql, [req.params.id] ,(error, results, fields) => {
-        if(error){
-            res.send(error);
-        }
+            if(error){
+                res.send(error);
+            }
         res.json(results);
-    });
+        })
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.insertEstadistica = (req, res) => 
@@ -54,11 +62,18 @@ module.exports.updateEstadistica = (req, res) =>
 
 module.exports.deleteEstadistica = (req, res) => 
 {
-    const sql = `DELETE FROM estadistica WHERE idEstadistica = ?`;
-        conexion.query(sql, [req.params.id] ,(error, results, fields) => {
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    });
+    let start = true;
+    start = dataValidation.intCheck(req.params.id,start);
+    if(start){
+        const sql = `DELETE FROM estadistica WHERE idEstadistica = ?`;
+            conexion.query(sql, [req.params.id] ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
