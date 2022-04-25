@@ -34,30 +34,53 @@ module.exports.getMision = (req,res) =>
 
 module.exports.insertMision = (req, res) => 
 {
-    const body = req.body; 
-    const sql = `INSERT INTO mision(idNPC, objetivo, nParticipantes, recompensa,
-        descripcionM) VALUES(?, ?, ?, ?, ?)`;
-    conexion.query(sql, [body.idNPC, body.objetivo, body.nParticipantes, body.recompensa,
-        body.descripcionM], (error, results, fields) =>{
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    })
+    const body = req.body;
+    let start = true;
+    start = dataValidation.intCheck(body.idNPC,start);
+    start = dataValidation.stringCheck(body.objetivo,start);
+    start = dataValidation.intCheck(body.nParticipantes,start);
+    start = dataValidation.stringCheck(body.recompensa,start);
+    start = dataValidation.stringCheck(body.descripcionM,start);
+    if(start){
+        const sql = `INSERT INTO mision(idNPC, objetivo, nParticipantes, recompensa,
+            descripcionM) VALUES(?, ?, ?, ?, ?)`;
+        conexion.query(sql, [body.idNPC, body.objetivo, body.nParticipantes, body.recompensa,
+            body.descripcionM], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.updateMision = (req, res) => 
 {
-    const body = req.body; 
-    const sql = `UPDATE mision SET idNPC = ?, objetivo = ?, nParticipantes = ?,
-    recompensa = ?, descripcionM = ? WHERE idMision = ?`;
-    conexion.query(sql, [body.idNPC, body.objetivo, body.nParticipantes, body.recompensa,
-        body.descripcionM, body.idMision], (error, results, fields) =>{
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    })
+    const body = req.body;
+    let start = true;
+    start = dataValidation.intCheck(body.idNPC,start);
+    start = dataValidation.stringCheck(body.objetivo,start);
+    start = dataValidation.intCheck(body.nParticipantes,start);
+    start = dataValidation.stringCheck(body.recompensa,start);
+    start = dataValidation.stringCheck(body.descripcionM,start);
+    start = dataValidation.intCheck(body.idMision,start);
+    if(start){
+        const sql = `UPDATE mision SET idNPC = ?, objetivo = ?, nParticipantes = ?,
+        recompensa = ?, descripcionM = ? WHERE idMision = ?`;
+        conexion.query(sql, [body.idNPC, body.objetivo, body.nParticipantes, body.recompensa,
+            body.descripcionM, body.idMision], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.deleteMision = (req, res) => 

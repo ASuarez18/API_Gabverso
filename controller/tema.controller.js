@@ -34,26 +34,41 @@ module.exports.getTema = (req,res) =>
 
 module.exports.insertTema = (req, res) => 
 {
-    const body = req.body; 
-    const sql = `INSERT INTO tema(tema) VALUES(?)`;
-    conexion.query(sql, [body.tema], (error, results, fields) =>{
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    })
+    const body = req.body;
+    let start = true;
+    start = dataValidation.stringCheck(body.tema,start);
+    if(start){
+        const sql = `INSERT INTO tema(tema) VALUES(?)`;
+        conexion.query(sql, [body.tema], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.updateTema = (req, res) => 
 {
-    const body = req.body; 
-    const sql = `UPDATE tema SET tema = ? WHERE idTema = ?`;
-    conexion.query(sql, [body.tema, body.idTema], (error, results, fields) =>{
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    })
+    const body = req.body;
+    let start = true;
+    start = dataValidation.stringCheck(body.tema,start);
+    start = dataValidation.intCheck(body.idTema,start);
+    if(start){
+        const sql = `UPDATE tema SET tema = ? WHERE idTema = ?`;
+        conexion.query(sql, [body.tema, body.idTema], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.deleteTema = (req, res) => 

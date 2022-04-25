@@ -52,48 +52,84 @@ module.exports.getAmigoU2 = (req,res) =>
 
 module.exports.getAmigo = (req,res) => 
 {
-    const sql = `SELECT * FROM amigos WHERE idUsuario1 = ? AND idUsuario2 = ?`;
-        conexion.query(sql, [body.idUsuario1, body.idUsuario2] ,(error, results, fields) => {
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    });
+    const body = req.body;
+    let start = true;
+    start = dataValidation.intCheck(body.idUsuario1,start);
+    start = dataValidation.intCheck(body.idUsuario2,start);
+    if(start){
+        const sql = `SELECT * FROM amigos WHERE idUsuario1 = ? AND idUsuario2 = ?`;
+            conexion.query(sql, [body.idUsuario1, body.idUsuario2] ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.insertAmigos = (req, res) => 
 {
-    const body = req.body; 
-    const sql = `INSERT INTO amigos(idUsuario1, idUsuario2) VALUES(?, ?)`;
-    conexion.query(sql, [body.idUsuario1, body.idUsuario2], (error, results, fields) =>{
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    })
+    const body = req.body;
+    let start = true;
+    start = dataValidation.intCheck(body.idUsuario1,start);
+    start = dataValidation.intCheck(body.idUsuario2,start);
+    if(start){
+        const sql = `INSERT INTO amigos(idUsuario1, idUsuario2) VALUES(?, ?)`;
+        conexion.query(sql, [body.idUsuario1, body.idUsuario2], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.updateAmigos = (req, res) => 
 {
-    const body = req.body; 
-    const sql = `UPDATE amigos SET idUsuario1 = ?, idUsuario2 = ? WHERE idUsuario1 = ?
-        AND idUsuario2 = ?`;
-    conexion.query(sql, [body.idUsuario1, body.idUsuario2, body.idUsuario1, body.idUsuario2,],
-        (error, results, fields) =>{
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    })
+    const body = req.body;
+    let start = true;
+    start = dataValidation.intCheck(body.idUsuario1,start);
+    start = dataValidation.intCheck(body.idUsuario2,start);
+    start = dataValidation.intCheck(body.idUsuario11,start);
+    start = dataValidation.intCheck(body.idUsuario21,start);
+    if(start){
+        const sql = `UPDATE amigos SET idUsuario1 = ?, idUsuario2 = ? WHERE idUsuario1 = ?
+            AND idUsuario2 = ?`;
+        conexion.query(sql, [body.idUsuario1, body.idUsuario2, body.idUsuario11, body.idUsuario21,],
+            (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        })
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.deleteAmigos = (req, res) => 
 {
-    const sql = `DELETE FROM amigos WHERE idUsuario1 = ? AND idUsuario2 = ?`;
-        conexion.query(sql, [body.idUsuario1, body.idUsuario2] ,(error, results, fields) => {
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    });
+    const body = req.body;
+    let start = true;
+    start = dataValidation.intCheck(body.idUsuario1,start);
+    start = dataValidation.intCheck(body.idUsuario2,start);
+    if(start){    
+        const sql = `DELETE FROM amigos WHERE idUsuario1 = ? AND idUsuario2 = ?`;
+            conexion.query(sql, [body.idUsuario1, body.idUsuario2] ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };

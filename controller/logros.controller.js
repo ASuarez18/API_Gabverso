@@ -34,26 +34,44 @@ module.exports.getLogro = (req,res) =>
 
 module.exports.insertLogro = (req, res) => 
 {
-    const body = req.body; 
-    const sql = `INSERT INTO logro(nombreLogro, descripcion) VALUES(?, ?)`;
-    conexion.query(sql, [body.nombreLogro, body.descripcion], (error, results, fields) =>{
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    })
+    const body = req.body;
+    let start = true;
+    start = dataValidation.stringCheck(body.nombreLogro,start);
+    start = dataValidation.stringCheck(body.descripcion,start);
+    if(start){
+        const sql = `INSERT INTO logro(nombreLogro, descripcion) VALUES(?, ?)`;
+        conexion.query(sql, [body.nombreLogro, body.descripcion], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.updateLogro = (req, res) => 
 {
-    const body = req.body; 
-    const sql = `UPDATE logro SET nombreLogro = ?, descripcion = ? WHERE idLogro = ?`;
-    conexion.query(sql, [body.nombreLogro, body.descripcion, body.idLogro], (error, results, fields) =>{
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    })
+    const body = req.body;
+    let start = true;
+    start = dataValidation.stringCheck(body.nombreLogro,start);
+    start = dataValidation.stringCheck(body.descripcion,start);
+    start = dataValidation.intCheck(body.idLogro,start);
+    if(start){
+        const body = req.body; 
+        const sql = `UPDATE logro SET nombreLogro = ?, descripcion = ? WHERE idLogro = ?`;
+        conexion.query(sql, [body.nombreLogro, body.descripcion, body.idLogro], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.deleteLogro = (req, res) => 

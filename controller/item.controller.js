@@ -34,26 +34,43 @@ module.exports.getItem = (req,res) =>
 
 module.exports.insertItem = (req, res) => 
 {
-    const body = req.body; 
-    const sql = `INSERT INTO item(tipo, uso) VALUES(?, ?)`;
-    conexion.query(sql, [body.tipo, body.uso], (error, results, fields) =>{
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    })
+    const body = req.body;
+    let start = true;
+    start = dataValidation.stringCheck(body.tipo,start);
+    start = dataValidation.stringCheck(body.uso,start);
+    if(start){
+        const sql = `INSERT INTO item(tipo, uso) VALUES(?, ?)`;
+        conexion.query(sql, [body.tipo, body.uso], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.updateItem = (req, res) => 
 {
-    const body = req.body; 
-    const sql = `UPDATE item SET tipo = ?, uso = ? WHERE idItem = ?`;
-    conexion.query(sql, [body.tipo, body.uso, body.idItem], (error, results, fields) =>{
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    })
+    const body = req.body;
+    let start = true;
+    start = dataValidation.stringCheck(body.tipo,start);
+    start = dataValidation.stringCheck(body.uso,start);
+    start = dataValidation.intCheck(body.idItem,start);
+    if(start){
+        const sql = `UPDATE item SET tipo = ?, uso = ? WHERE idItem = ?`;
+        conexion.query(sql, [body.tipo, body.uso, body.idItem], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.deleteItem = (req, res) => 

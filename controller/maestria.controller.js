@@ -34,9 +34,8 @@ module.exports.getMaestria = (req,res) =>
 
 module.exports.insertMaestria = (req, res) => 
 {
-    const body = req.body; 
-    const sql = `INSERT INTO maestria(maestria) VALUES(?)`;
-    conexion.query(sql, [body.maestria], (error, results, fields) =>{
+    const sql = `INSERT INTO maestria(maestria) VALUES(0)`;
+    conexion.query(sql, (error, results, fields) =>{
         if(error){
             res.send(error);
         }
@@ -46,14 +45,22 @@ module.exports.insertMaestria = (req, res) =>
 
 module.exports.updateMaestria = (req, res) => 
 {
-    const body = req.body; 
-    const sql = `UPDATE maestria SET maestria = ? WHERE idMaestria = ?`;
-    conexion.query(sql, [body.maestria, body.idMaestria], (error, results, fields) =>{
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    })
+    const body = req.body;
+    let start = true;
+    start = dataValidation.intCheck(body.maestria,start);
+    start = dataValidation.intCheck(body.idMaestria,start);
+    if(start){
+        const sql = `UPDATE maestria SET maestria = ? WHERE idMaestria = ?`;
+        conexion.query(sql, [body.maestria, body.idMaestria], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.deleteMaestria = (req, res) => 

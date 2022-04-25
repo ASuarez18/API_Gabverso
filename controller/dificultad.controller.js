@@ -34,26 +34,41 @@ module.exports.getDificultad = (req,res) =>
 
 module.exports.insertDificultad = (req, res) => 
 {
-    const body = req.body; 
-    const sql = `INSERT INTO dificultad(dif) VALUES(?)`;
-    conexion.query(sql, [body.dif], (error, results, fields) =>{
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    })
+    const body = req.body;
+    let start = true;
+    start = dataValidation.stringCheck(body.dif,start);
+    if(start){
+        const sql = `INSERT INTO dificultad(dif) VALUES(?)`;
+        conexion.query(sql, [body.dif], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.updateDificultad = (req, res) => 
 {
-    const body = req.body; 
-    const sql = `UPDATE dificultad SET dif = ? WHERE idDif = ?`;
-    conexion.query(sql, [body.dif, body.idDif], (error, results, fields) =>{
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    })
+    const body = req.body;
+    let start = true;
+    start = dataValidation.stringCheck(body.dif,start);
+    start = dataValidation.intCheck(body.idDif,start);
+    if(start){
+        const sql = `UPDATE dificultad SET dif = ? WHERE idDif = ?`;
+        conexion.query(sql, [body.dif, body.idDif], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
 };
 
 module.exports.deleteDificultad = (req, res) => 
