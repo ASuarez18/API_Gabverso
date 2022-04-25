@@ -1,7 +1,7 @@
 
 
 module.exports.intCheck = (num,check) => {
-  if (isNaN(num) || num < 0) {
+  if (isNaN(num)) {
     return false;
   }
   return check;
