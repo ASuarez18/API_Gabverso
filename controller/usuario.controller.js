@@ -45,7 +45,7 @@ module.exports.insertUsuario = (req, res) =>
     if(start){
         const sql = `INSERT INTO usuario(idGremio, userName, correo,
             contrasenia, rol, edad, skin, nivel, experiencia)
-            VALUES(?, 0, ?, ?, ?, ?, ?, ?, 0, 0)`;
+            VALUES(0, ?, ?, SHA2(?,224), ?, ?, ?, 0, 0)`;
         conexion.query(sql, [body.userName, body.correo,
             body.contrasenia, body.rol, body.edad, body.skin], 
             (error, results, fields) =>{
@@ -76,7 +76,7 @@ module.exports.updateUsuario = (req, res) =>
     start = dataValidation.intCheck(body.idUsuario,start);
     if(start){
         const sql = `UPDATE usuario SET idGremio = ?, userName = ?,
-            correo = ?, contrasenia = ?, rol = ?, edad = ?, skin = ?, nivel = ?, experiencia =?
+            correo = ?, contrasenia = SHA2(?,224), rol = ?, edad = ?, skin = ?, nivel = ?, experiencia =?
             WHERE idUsuario = ?`;
         conexion.query(sql, [body.idGremio, body.userName, body.correo,
             body.contrasenia, body.rol, body.edad, body.skin, body.nivel, body.experiencia, 
