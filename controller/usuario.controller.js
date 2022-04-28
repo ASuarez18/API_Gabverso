@@ -39,7 +39,7 @@ module.exports.insertUsuario = (req, res) =>
     start = dataValidation.stringCheck(body.userName,start);
     start = dataValidation.stringCheck(body.correo,start);
     start = dataValidation.stringCheck(body.contrasenia,start);
-    start = dataValidation.stringCheck(body.rol,start);
+    start = dataValidation.intCheck(body.rol,start);
     start = dataValidation.intCheck(body.edad,start);
     start = dataValidation.intCheck(body.skin,start);
     if(start){
@@ -68,7 +68,7 @@ module.exports.updateUsuario = (req, res) =>
     start = dataValidation.stringCheck(body.userName,start);
     start = dataValidation.stringCheck(body.correo,start);
     start = dataValidation.stringCheck(body.contrasenia,start);
-    start = dataValidation.stringCheck(body.rol,start);
+    start = dataValidation.intCheck(body.rol,start);
     start = dataValidation.intCheck(body.edad,start);
     start = dataValidation.intCheck(body.skin,start);
     start = dataValidation.intCheck(body.nivel,start);
