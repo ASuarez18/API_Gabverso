@@ -4,6 +4,7 @@ const conexion = mysql.createConnection(mysqlConfig);
 const jwt = require('jsonwebtoken');
 const config = require('../config/jwt');
 const dataValidation = require('../helpers/dataValidation');
+const fetch = require('node-fetch');
 
 module.exports.searchUser = (req, res) =>
 {
@@ -32,33 +33,38 @@ module.exports.insertLogin = (req, res) =>
         let mensaje = "Usuario no autenticado";
         let token = '';
         let idUser;
-        fetch(url,  {
-                        method: 'GET',
-                        headers: {
-                        "Content-type": "application/json"
-                        },
-                        body: { "user": user, "password": password }
-                    })
-        .then(response => res.json())
-        .then(data => {
-            let arrtemp = data.map(objeto => objeto.idUsuario);
-            idUser = arrtemp[0];
-        });
-
-        if(!isNaN(idUser) && idUser > 0)
-        {
-            const payload = {
-                id: idUser,
-                usuario: user
-            }
-            token = jwt.sign(payload, config.key, {expiresIn: 7200})
-            mensaje = 'Usuario autenticado'
+        async function search(){
+            const response = await fetch(url,  {
+                            method: 'POST',
+                            headers: {
+                            "Content-type": "application/json"
+                            },
+                            body: JSON.stringify({"user": user, "password": password})
+                        });
+            const data = await response.json();
+            let arrtemp = data.map(object => object.idUsuario);
+            console.log(arrtemp);
+            return arrtemp;
         }
-        
-        res.json
-        ({
-            mensaje: mensaje,
-            token: token
+
+        search().then(arrtemp => {
+            idUser = arrtemp[0];
+            if(!isNaN(idUser) && idUser > 0)
+            {
+                console.log(user);
+                const payload = {
+                    id: idUser,
+                    usuario: user
+                }
+                token = jwt.sign(payload, config.key, {expiresIn: 7200})
+                mensaje = 'Usuario autenticado'
+            }
+
+            res.json
+            ({
+                mensaje: mensaje,
+                token: token
+            });
         });
     }
     else{

@@ -6,4 +6,4 @@ const config = {
     database: 'WisdomIsland'
     };
 
-    module.exports = config;
+module.exports = config;
