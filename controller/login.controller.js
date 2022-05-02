@@ -4,7 +4,6 @@ const conexion = mysql.createConnection(mysqlConfig);
 const jwt = require('jsonwebtoken');
 const config = require('../config/jwt');
 const dataValidation = require('../helpers/dataValidation');
-const fetch = require('node-fetch');
 
 module.exports.insertLogin = (req, res) => 
 {
