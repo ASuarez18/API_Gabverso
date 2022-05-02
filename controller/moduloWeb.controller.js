@@ -19,7 +19,7 @@ module.exports.getModuloWebU = (req,res) =>
     let start = true;
     start = dataValidation.intCheck(req.params.id,start);
     if(start){
-        const sql = `SELECT * FROM moduloWeb WHERE idUsuario = ?`;
+        const sql = `SELECT idPregunta FROM moduloWeb WHERE idUsuario = ? && estadoActivo = TRUE`;
             conexion.query(sql, [req.params.id] ,(error, results, fields) => {
             if(error){
                 res.send(error);
