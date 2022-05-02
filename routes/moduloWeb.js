@@ -9,6 +9,7 @@ router.get('/moduloWebU/:id', middleware, moduloWebController.getModuloWebU);
 router.get('/moduloWebP/:id', middleware, moduloWebController.getModuloWebP);
 router.get('/moduloWeb', middleware, moduloWebController.getModuloWeb)
 router.put('/moduloWeb', middleware, moduloWebController.updateModuloWeb);
+router.post('/websection', middleware, moduloWebController.insertSeccion);
 router.post('/moduloWeb', middleware, moduloWebController.insertModuloWeb);
 router.delete('/moduloWeb/:id', middleware, moduloWebController.deleteModuloWeb);
 
