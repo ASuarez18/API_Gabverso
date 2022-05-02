@@ -21,7 +21,7 @@ module.exports.insertLogin = (req, res) =>
             if(error){
                 res.send(error);
             }
-            let mensaje = "Usuario no autenticado";
+            let mensaje = -1;
             let token = "";
             const result = Object.values(JSON.parse(JSON.stringify(results)));
             let arrtemp = result.map(object => object.idUsuario);
@@ -33,8 +33,8 @@ module.exports.insertLogin = (req, res) =>
                     id: idUser,
                     usuario: user
                 }
-                token = jwt.sign(payload, config.key, {expiresIn: 7200})
-                mensaje = 'Usuario autenticado'
+                token = jwt.sign(payload, config.key, {expiresIn: 7200});
+                mensaje = idUser;
             }
 
             res.json
@@ -45,7 +45,7 @@ module.exports.insertLogin = (req, res) =>
         });
     }
     else{
-        res.send("Valores inválidos")
+        res.send(-2)
     }
 };
 
