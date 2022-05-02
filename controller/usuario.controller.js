@@ -32,6 +32,24 @@ module.exports.getUsuario = (req,res) =>
     }
 };
 
+module.exports.getUsuarioO = (req,res) => 
+{
+    let start = true;
+    start = dataValidation.intCheck(req.params.id,start);
+    if(start){
+        const sql = `SELECT userName, nivel FROM usuario ORDER BY(nivel) DESC LIMIT 5`;
+            conexion.query(sql ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
+};
+
 module.exports.insertUsuario = (req, res) => 
 {
     const body = req.body;
