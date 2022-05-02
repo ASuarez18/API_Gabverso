@@ -6,19 +6,6 @@ const config = require('../config/jwt');
 const dataValidation = require('../helpers/dataValidation');
 const fetch = require('node-fetch');
 
-module.exports.searchUser = (req, res) =>
-{
-    let body = req.body;
-    const sql = `SELECT idUsuario FROM usuario
-        WHERE userName = ? AND contrasenia = SHA2(?,224)`
-    conexion.query(sql, [body.user, body.password], (error, results, fields) =>{
-        if(error){
-            res.send(error);
-        }
-        res.json(results);
-    });
-}
-
 module.exports.insertLogin = (req, res) => 
 {
     const user = req.body.user;
@@ -29,29 +16,20 @@ module.exports.insertLogin = (req, res) =>
     start = dataValidation.stringCheck(password,start);
 
     if(start){
-        let url ="http://localhost:3001/api/search"
-        let mensaje = "Usuario no autenticado";
-        let token = '';
-        let idUser;
-        async function search(){
-            const response = await fetch(url,  {
-                            method: 'POST',
-                            headers: {
-                            "Content-type": "application/json"
-                            },
-                            body: JSON.stringify({"user": user, "password": password})
-                        });
-            const data = await response.json();
-            let arrtemp = data.map(object => object.idUsuario);
-            console.log(arrtemp);
-            return arrtemp;
-        }
+        const sql = `SELECT idUsuario FROM usuario
+            WHERE userName = ? AND contrasenia = SHA2(?,224)`;
+        conexion.query(sql, [user, password], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            let mensaje = "Usuario no autenticado";
+            let token = "";
+            const result = Object.values(JSON.parse(JSON.stringify(results)));
+            let arrtemp = result.map(object => object.idUsuario);
+            let idUser = arrtemp[0];
 
-        search().then(arrtemp => {
-            idUser = arrtemp[0];
             if(!isNaN(idUser) && idUser > 0)
             {
-                console.log(user);
                 const payload = {
                     id: idUser,
                     usuario: user
