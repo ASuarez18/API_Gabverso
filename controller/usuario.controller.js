@@ -62,8 +62,10 @@ module.exports.insertUsuario = (req, res) =>
     start = dataValidation.intCheck(body.skin,start);
     if(start){
         const sql = `INSERT INTO usuario(idGremio, userName, correo,
-            contrasenia, rol, edad, skin, nivel, experiencia)
-            VALUES(0, ?, ?, SHA2(?,224), ?, ?, ?, 0, 0)`;
+            contrasenia, rol, edad, skin, nivel, experiencia, puntos, 
+            horasJuego, wins, loses, vida, mana, dano, defensa)
+            VALUES(6, ?, ?, SHA2(?,224), ?, ?, ?, 0, 0, 0, 0, 0, 0, 
+            100, 100, 20, 10)`;
         conexion.query(sql, [body.userName, body.correo,
             body.contrasenia, body.rol, body.edad, body.skin], 
             (error, results, fields) =>{
@@ -82,6 +84,15 @@ module.exports.updateUsuario = (req, res) =>
 {
     const body = req.body;
     let start = true;
+    start = dataValidation.intCheck(body.puntos,start);
+    start = dataValidation.intCheck(body.horasJuego,start);
+    start = dataValidation.intCheck(body.wins,start);
+    start = dataValidation.intCheck(body.loses,start);
+    start = dataValidation.intCheck(body.vida,start);
+    start = dataValidation.intCheck(body.mana,start);
+    start = dataValidation.intCheck(body.dano,start);
+    start = dataValidation.intCheck(body.defensa,start);    
+    start = dataValidation.intCheck(body.idEstadistica,start);
     start = dataValidation.intCheck(body.idGremio,start);
     start = dataValidation.stringCheck(body.userName,start);
     start = dataValidation.stringCheck(body.correo,start);
@@ -94,7 +105,9 @@ module.exports.updateUsuario = (req, res) =>
     start = dataValidation.intCheck(body.idUsuario,start);
     if(start){
         const sql = `UPDATE usuario SET idGremio = ?, userName = ?,
-            correo = ?, contrasenia = SHA2(?,224), rol = ?, edad = ?, skin = ?, nivel = ?, experiencia =?
+            correo = ?, contrasenia = SHA2(?,224), rol = ?, edad = ?, 
+            skin = ?, nivel = ?, experiencia =?, puntos = ?, horasJuego = ?, 
+            wins = ?, loses = ?, vida = ?, mana = ?, dano = ?, defensa = ?
             WHERE idUsuario = ?`;
         conexion.query(sql, [body.idGremio, body.userName, body.correo,
             body.contrasenia, body.rol, body.edad, body.skin, body.nivel, body.experiencia, 
@@ -109,6 +122,40 @@ module.exports.updateUsuario = (req, res) =>
         res.send("Valores inválidos")
     }
 };
+
+module.exports.increasePuntos = (req, res) => 
+{
+    const body = req.body;
+    let start = true;
+    start = dataValidation.intCheck(body.puntos,start);
+    start = dataValidation.intCheck(body.idUsuario,start);
+    if(body.puntos < 0) start = false;
+    if(start){
+        const sql1 = `SELECT puntos FROM usuario WHERE idUsuario = ?`
+        conexion.query(sql1, [body.idUsuario], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            let result = Object.values(JSON.parse(JSON.stringify(results)));
+            let arrtemp = result.map(object => object.puntos);
+            let pts = arrtemp[0];
+
+            pts = pts + body.puntos;
+
+            const sql = `UPDATE usuario SET puntos = ? WHERE idUsuario = ?`;
+            conexion.query(sql, [pts, body.idUsuario], (error, results, fields) =>{
+                if(error){
+                    res.send(error);
+                }
+                res.json(results);
+            });
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
+};
+
 
 module.exports.deleteUsuario = (req, res) => 
 {

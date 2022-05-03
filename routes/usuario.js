@@ -8,6 +8,7 @@ router.get('/usuario', middleware, usuarioController.getUsuarios);
 router.get('/usuario/:id', middleware, usuarioController.getUsuario);
 router.get('/usuarioO', middleware, usuarioController.getUsuarioO);
 router.put('/usuario', middleware, usuarioController.updateUsuario);
+router.put('/punto', usuarioController.increasePuntos);
 router.post('/usuario', middleware, usuarioController.insertUsuario);
 router.delete('/usuario/:id', middleware, usuarioController.deleteUsuario);
 

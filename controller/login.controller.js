@@ -51,40 +51,29 @@ module.exports.insertLogin = (req, res) =>
 
 module.exports.insertUsuario = (req, res) => 
 {
-
-    insertEstadistica = (req, res) => 
-    {
-        const sql = `INSERT INTO estadistica(puntos, horasJuego, wins, loses, vida, 
-            mana, dano, defensa) VALUES(0, 0, 0, 0, 100, 100, 20, 10)`;
-        conexion.query(sql, (error, results, fields) =>{
-            if(error){
-                res.send(error);
-            }
-            res.json(results);
-        });
-    };
-
     const body = req.body;
     let start = true;
+    
     start = dataValidation.stringCheck(body.userName,start);
     start = dataValidation.stringCheck(body.correo,start);
     start = dataValidation.stringCheck(body.contrasenia,start);
-    if(body.contrasenia.length() < 3 || body.contrasenia.length() > 20) start = false;
+    //if(body.contrasenia.length() < 3 || body.contrasenia.length() > 20) start = false;
     start = dataValidation.intCheck(body.rol,start);
     start = dataValidation.intCheck(body.edad,start);
     start = dataValidation.intCheck(body.skin,start);
+    
     if(start){
 
-        const sql = `INSERT INTO usuario(idGremio, userName, correo,
-            contrasenia, rol, edad, skin, nivel, experiencia)
-            VALUES(?, 0, ?, ?, ?, ?, ?, ?, 0, 0)`;
+        const sql = `INSERT INTO usuario(idGremio, userName, correo, contrasenia, 
+            rol, edad, skin, nivel, experiencia, puntos, horasJuego, wins, loses, 
+            vida, mana, dano, defensa) VALUES (6,?,?,SHA2(?,224),?,?,?,0,0,0,0,0,
+            0,100,100,20,10)`;
         conexion.query(sql, [body.userName, body.correo,
             body.contrasenia, body.rol, body.edad, body.skin], 
             (error, results, fields) =>{
             if(error){
                 res.send(error);
             }
-            insertEstadistica();
             res.json(results);
         });
     }
