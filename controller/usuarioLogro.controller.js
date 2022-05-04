@@ -76,10 +76,9 @@ module.exports.insertUsuarioLogro = (req, res) =>
     let start = true;
     start = dataValidation.intCheck(body.idUsuario,start);
     start = dataValidation.intCheck(body.idLogro,start);
-    start = dataValidation.stringCheck(body.fecha,start);
     if(start){
-        const sql = `INSERT INTO usuarioLogro(idUsuario, idLogro, fecha) VALUES(?, ?, ?)`;
-        conexion.query(sql, [body.idUsuario, body.idLogro, body.fecha], (error, results, fields) =>{
+        const sql = `INSERT INTO usuarioLogro(idUsuario, idLogro, fecha) VALUES(?, ?, NOW)`;
+        conexion.query(sql, [body.idUsuario, body.idLogro], (error, results, fields) =>{
             if(error){
                 res.send(error);
             }

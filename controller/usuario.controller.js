@@ -156,6 +156,63 @@ module.exports.increasePuntos = (req, res) =>
     }
 };
 
+module.exports.increaseExperiencia = (req, res) => 
+{
+    const body = req.body;
+    let start = true;
+    start = dataValidation.intCheck(body.experiencia,start);
+    start = dataValidation.intCheck(body.idUsuario,start);
+    if(body.experiencia < 0) start = false;
+    if(start){
+        const sql1 = `SELECT experiencia FROM usuario WHERE idUsuario = ?`
+        conexion.query(sql1, [body.idUsuario], (error, results, fields) =>{
+            if(error){
+                res.send(error);
+            }
+            let result = Object.values(JSON.parse(JSON.stringify(results)));
+            let arrtemp = result.map(object => object.experiencia);
+            let exp = arrtemp[0];
+
+            exp = exp + body.experiencia;
+
+            if(exp >= 100){
+                exp = exp - 100;
+
+                const sql2 = `SELECT nivel FROM usuario WHERE idUsuario = ?`
+                conexion.query(sql2, [body.idUsuario], (error1, results1, fields) =>{
+                    if(error1){
+                        res.send(error);
+                    }
+                    let result1 = Object.values(JSON.parse(JSON.stringify(results1)));
+                    let arrtemp1 = result1.map(object => object.nivel);
+                    let lvl = arrtemp1[0];
+
+                    lvl = lvl + 1;
+
+                    const sql = `UPDATE usuario SET nivel = ?, experiencia = ? WHERE idUsuario = ?`;
+                    conexion.query(sql, [lvl, exp, body.idUsuario], (error2, results2, fields) =>{
+                        if(error){
+                            res.send(error2);
+                        }
+                        res.json(results2);
+                    });
+                });
+            }
+            else{
+                const sql = `UPDATE usuario SET experiencia = ? WHERE idUsuario = ?`;
+                conexion.query(sql, [exp, body.idUsuario], (error1, results1, fields) =>{
+                    if(error){
+                        res.send(error1);
+                    }
+                    res.json(results1);
+                });
+            }
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
+};
 
 module.exports.deleteUsuario = (req, res) => 
 {
