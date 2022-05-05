@@ -67,7 +67,7 @@ module.exports.insertMensaje = (req, res) =>
                     if(error){
                         res.send(error);
                     }
-                    res.json(results);
+                    res.send("Enviado");
                 });
             }
             else if(idDest == body.idRemitente)
