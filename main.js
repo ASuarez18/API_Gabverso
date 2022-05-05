@@ -29,6 +29,7 @@ const usuarioMision = require('./routes/usuarioMision');
 const usuarioLogro = require('./routes/usuarioLogro');
 const usuarioPoder = require('./routes/usuarioPoder');
 const usuarioItem = require('./routes/usuarioItem');
+const mensaje = require('./routes/mensaje');
 
 app.use(express.json());
 app.use(multer().array());
@@ -57,6 +58,7 @@ app.use('/bridge', usuarioMision);
 app.use('/bridge', usuarioLogro);
 app.use('/bridge', usuarioPoder);
 app.use('/bridge', usuarioItem);
+app.use('/bridge', mensaje);
 
 
 //Callback >- función que se ejecuta como respuesta a un evento o acción
