@@ -70,6 +70,9 @@ module.exports.insertMensaje = (req, res) =>
                     res.json(results);
                 });
             }
+            else{
+                res.send("Valores inválidos")
+            }
         });
     }
     else{
