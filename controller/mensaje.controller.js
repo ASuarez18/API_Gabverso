@@ -26,7 +26,11 @@ module.exports.getMensajeD = (req,res) =>
     let start = true;
     start = dataValidation.intCheck(req.params.id,start);
     if(start){
-        const sql = `SELECT idRemitente,contenido FROM mensaje WHERE idDestinatario = ?`;
+        const sql = 
+        `SELECT mensaje.idRemitente,usuario.userName,mensaje.contenido 
+        FROM usuario
+        INNER JOIN mensaje ON usuario.idUsuario=mensaje.idRemitente
+        WHERE idDestinatario = ?`;
             conexion.query(sql, [req.params.id] ,(error, results, fields) => {
             if(error){
                 res.send(error);
