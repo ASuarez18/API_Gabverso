@@ -175,8 +175,8 @@ module.exports.increaseExperiencia = (req, res) =>
 
             exp = exp + body.experiencia;
 
-            if(exp >= 100){
-                exp = exp - 100;
+            if(exp >= 1000){
+                exp = exp - 1000;
 
                 const sql2 = `SELECT nivel FROM usuario WHERE idUsuario = ?`
                 conexion.query(sql2, [body.idUsuario], (error1, results1, fields) =>{
