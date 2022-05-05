@@ -70,6 +70,10 @@ module.exports.insertMensaje = (req, res) =>
                     res.json(results);
                 });
             }
+            else if(idDest == body.idRemitente)
+            {
+                res.send("Mismo usuario");
+            }
             else{
                 res.send("Valores inválidos")
             }
