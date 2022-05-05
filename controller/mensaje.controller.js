@@ -60,7 +60,7 @@ module.exports.insertMensaje = (req, res) =>
             let result = Object.values(JSON.parse(JSON.stringify(results1)));
             let arrtemp = result.map(object => object.idUsuario);
             let idDest = arrtemp[0];
-            if(!isNaN(idDest) && idDest > 0)
+            if(!isNaN(idDest) && idDest > 0 && idDest != body.idRemitente)
             {
                 const sql = `INSERT INTO mensaje(idRemitente, idDestinatario, contenido) VALUES(?, ?, ?)`;
                 conexion.query(sql, [body.idRemitente, idDest, body.contenido], (error, results, fields) =>{
