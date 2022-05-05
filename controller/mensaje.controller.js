@@ -67,20 +67,20 @@ module.exports.insertMensaje = (req, res) =>
                     if(error){
                         res.send(error);
                     }
-                    res.send("Enviado");
+                    res.json("Enviado");
                 });
             }
             else if(idDest == body.idRemitente)
             {
-                res.send("Mismo usuario");
+                res.json("Mismo usuario");
             }
             else{
-                res.send("Valores inválidos")
+                res.json("Valores inválidos")
             }
         });
     }
     else{
-        res.send("Valores inválidos")
+        res.json("Valores inválidos")
     }
 };
 
