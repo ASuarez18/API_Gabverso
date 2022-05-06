@@ -35,7 +35,6 @@ module.exports.getUsuario = (req,res) =>
 module.exports.getUsuarioOe = (req,res) => 
 {
     let start = true;
-    start = dataValidation.intCheck(req.params.id,start);
     if(start){
         const sql = `SELECT userName, nivel FROM usuario ORDER BY(nivel) DESC LIMIT 5`;
             conexion.query(sql ,(error, results, fields) => {
@@ -53,7 +52,6 @@ module.exports.getUsuarioOe = (req,res) =>
 module.exports.getUsuarioOp = (req,res) => 
 {
     let start = true;
-    start = dataValidation.intCheck(req.params.id,start);
     if(start){
         const sql = `SELECT userName, puntos FROM usuario ORDER BY(puntos) DESC LIMIT 5`;
             conexion.query(sql ,(error, results, fields) => {
