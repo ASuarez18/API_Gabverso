@@ -72,12 +72,12 @@ module.exports.insertUsuario = (req, res) =>
             body.contrasenia, body.rol, body.edad, body.skin], 
             (error, results, fields) =>{
             if(error){
-                res.send(error);
+                res.json("Error al crear el usuario");
             }
-            res.json(results);
+            res.json("Usuario creado");
         });
     }
     else{
-        res.send("Valores inválidos")
+        res.json("Valores inválidos")
     }
 };
