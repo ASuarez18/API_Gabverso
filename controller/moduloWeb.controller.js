@@ -95,7 +95,7 @@ module.exports.getPreguntaTot = (req,res) =>
     let start = true;
     start = dataValidation.intCheck(req.params.id,start);
     if(start){
-        const sql = `SELECT COUNT(idPregunta) FROM moduloWeb WHERE idUsuario = ?`;
+        const sql = `SELECT COUNT(idPregunta) AS Cpregunta FROM moduloWeb WHERE idUsuario = ?`;
         conexion.query(sql, [req.params.id] ,(error, results, fields) => {
             if(error){
                 res.send(error);

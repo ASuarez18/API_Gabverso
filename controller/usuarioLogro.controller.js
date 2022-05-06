@@ -76,7 +76,7 @@ module.exports.getLogroTot = (req,res) =>
     let start = true;
     start = dataValidation.intCheck(req.params.id,start);
     if(start){
-        const sql = `SELECT COUNT(idLogro) FROM usuarioLogro WHERE idUsuario = ?`;
+        const sql = `SELECT COUNT(idLogro) AS Clogro FROM usuarioLogro WHERE idUsuario = ?`;
         conexion.query(sql, [req.params.id] ,(error, results, fields) => {
             if(error){
                 res.send(error);
