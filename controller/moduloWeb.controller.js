@@ -32,6 +32,26 @@ module.exports.getModuloWebU = (req,res) =>
     }
 };
 
+module.exports.getModuloWebUPT = (req,res) => 
+{
+    let start = true;
+    start = dataValidation.intCheck(req.params.id,start);
+    if(start){
+        const sql = `SELECT pregunta.pregunta,pregunta.categoria FROM pregunta
+            JOIN moduloWeb ON pregunta.idPregunta = moduloWeb.idPregunta WHERE 
+            idUsuario = ? && estadoActivo = TRUE`;
+            conexion.query(sql, [req.params.id] ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
+};
+
 module.exports.getModuloWebP = (req,res) => 
 {
     let start = true;
@@ -59,6 +79,24 @@ module.exports.getModuloWeb = (req,res) =>
     if(start){
         const sql = `SELECT * FROM moduloWeb WHERE idUsuario = ? AND idPregunta = ?`;
         conexion.query(sql, [body.idUsuario, body.idPregunta] ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
+};
+
+module.exports.getPreguntaTot = (req,res) => 
+{
+    let start = true;
+    start = dataValidation.intCheck(req.params.id,start);
+    if(start){
+        const sql = `SELECT COUNT(idPregunta) FROM moduloWeb WHERE idUsuario = ?`;
+        conexion.query(sql, [req.params.id] ,(error, results, fields) => {
             if(error){
                 res.send(error);
             }
