@@ -32,7 +32,7 @@ module.exports.getUsuario = (req,res) =>
     }
 };
 
-module.exports.getUsuarioO = (req,res) => 
+module.exports.getUsuarioOe = (req,res) => 
 {
     let start = true;
     start = dataValidation.intCheck(req.params.id,start);
@@ -49,6 +49,25 @@ module.exports.getUsuarioO = (req,res) =>
         res.send("Valores inválidos")
     }
 };
+
+module.exports.getUsuarioOp = (req,res) => 
+{
+    let start = true;
+    start = dataValidation.intCheck(req.params.id,start);
+    if(start){
+        const sql = `SELECT userName, puntos FROM usuario ORDER BY(puntos) DESC LIMIT 5`;
+            conexion.query(sql ,(error, results, fields) => {
+            if(error){
+                res.send(error);
+            }
+            res.json(results);
+        });
+    }
+    else{
+        res.send("Valores inválidos")
+    }
+};
+
 
 module.exports.insertUsuario = (req, res) => 
 {
