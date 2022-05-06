@@ -19,7 +19,8 @@ module.exports.getUsuarioLogroU = (req,res) =>
     let start = true;
     start = dataValidation.intCheck(req.params.id,start);
     if(start){
-        const sql = `SELECT * FROM usuarioLogro WHERE idUsuario = ?`;
+        const sql = `SELECT logro.nombreLogro,logro.descripcion FROM logro
+            JOIN usuarioLogro ON logro.idLogro = usuarioLogro.idLogro WHERE idUsuario = ?`;
             conexion.query(sql, [req.params.id] ,(error, results, fields) => {
             if(error){
                 res.send(error);
