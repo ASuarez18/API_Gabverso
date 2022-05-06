@@ -19,7 +19,9 @@ module.exports.getAmigoU1 = (req,res) =>
     let start = true;
     start = dataValidation.intCheck(req.params.id,start);
     if(start){
-        const sql = `SELECT * FROM amigos WHERE idUsuario1 = ?`;
+        const sql = `SELECT usuario.userName FROM usuario 
+            JOIN amigos ON usuario.idUsuario = amigos.idUsuario2
+            WHERE idUsuario1 = ?`;
             conexion.query(sql, [req.params.id] ,(error, results, fields) => {
             if(error){
                 res.send(error);
